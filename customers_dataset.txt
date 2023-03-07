@@ -1,0 +1,29 @@
+-- 1. To show unique city in customers_dataset
+select *
+from customers_dataset
+where false; --To show columns name
+
+--2. columns name="customer_id,"customer_unique_id",
+--             "customer_zip_code_prefix","customer_city","customer_state
+
+-- 3. Check duplicate data based on customer_id
+select customer_id
+from customers_dataset;
+
+select distinct customer_id
+from customers_dataset; -- There is no duplicate data
+
+-- 4. Check the differences between customer_id and customer_unique_id
+select customer_id, customer_unique_id
+from customers_dataset;
+
+-- 5. Filter data to find most customer location
+select distinct (customer_city), count (customer_city)
+from customers_dataset
+group by customer_city
+order by count desc limit 10;
+
+select distinct(customer_state), count (customer_state)
+from customers_dataset
+group by customer_state
+order by count desc;
