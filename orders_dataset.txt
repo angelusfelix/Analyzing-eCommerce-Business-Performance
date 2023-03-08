@@ -43,10 +43,42 @@ order by order_purchase_timestamp limit 10;(--desc)
 -- 6. Approval TimeFrame
 select order_approved_at,
 order_purchase_timestamp,
-(EXTRACT(EPOCH FROM order_approved_at::timestamp - order_purchase_timestamp::timestamp)/3600)::int2 AS hours_approved
+(EXTRACT(EPOCH FROM order_approved_at::timestamp - order_purchase_timestamp::timestamp)/3600)::int2 AS approval_hour_timeframe
 from orders_dataset
 where not order_approved_at is null 
 and not order_delivered_carrier_date is null
 and not order_delivered_customer_date is null
-order by hours_approved desc
+order by approval_hour_timeframe desc
 -- 
+
+-- 7. Join Table to customers_dataset
+select od.order_id,
+od.customer_id, 
+od.order_status,
+cd.customer_city
+from orders_dataset as od
+inner join customers_dataset as cd
+on od.customer_id= cd.customer_id
+where customer_city like 'sao paulo';
+
+-- 8. Check order_status in Sao Paulo
+select distinct (od.order_status),count (od.order_status)
+from customers_dataset as cd
+inner join orders_dataset as od
+on od.customer_id= cd.customer_id
+where customer_city like 'sao paulo'
+group by od.order_status;
+
+-- 9.Join Table to customers_dataset, approval timeframe in not null values
+select od.order_id,
+od.customer_id, 
+od.order_status,
+cd.customer_city, 
+(EXTRACT(EPOCH FROM order_approved_at::timestamp - order_purchase_timestamp::timestamp)/3600)::int2 AS approval_hour_timeframe
+from orders_dataset as od
+inner join customers_dataset as cd
+on od.customer_id= cd.customer_id
+where not order_approved_at is null 
+and not order_delivered_carrier_date is null
+and not order_delivered_customer_date is null
+order by approval_hour_timeframe desc;
