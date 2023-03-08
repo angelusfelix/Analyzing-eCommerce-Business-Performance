@@ -1,0 +1,52 @@
+-- 1. To show column name
+select *
+from orders_dataset
+where false;
+
+-- 2.Check order_status in all data
+select distinct (order_status), count (order_status)
+from orders_dataset
+group by order_status
+order by count desc;
+-- 8 variable in order_status ("approved","canceled",
+--                             "created","delivered","invoiced",
+--			       "processing","shipped", "unavailable")
+
+-- 3. Check order_status' count in null values
+select distinct (order_status), count (order_status)
+from orders_dataset
+where order_approved_at is null 
+or order_delivered_carrier_date is null
+or order_delivered_customer_date is null
+group by order_status
+order by count desc;
+--total 2980 null values
+
+-- 4. Check order_status's count in not null values
+select distinct (order_status), count (order_status)
+from orders_dataset
+where not order_approved_at is null 
+and not order_delivered_carrier_date is null
+and not order_delivered_customer_date is null
+group by order_status;
+-- 2 variable in order_status ("canceled", "delivered")
+
+--  5. Check purchases date 
+select *
+from orders_dataset
+where not order_approved_at is null 
+and not order_delivered_carrier_date is null
+and not order_delivered_customer_date is null
+order by order_purchase_timestamp limit 10;(--desc)
+-- order purchase start from 15th Sept,2016 until 29th Aug,2018
+
+-- 6. Approval TimeFrame
+select order_approved_at,
+order_purchase_timestamp,
+(EXTRACT(EPOCH FROM order_approved_at::timestamp - order_purchase_timestamp::timestamp)/3600)::int2 AS hours_approved
+from orders_dataset
+where not order_approved_at is null 
+and not order_delivered_carrier_date is null
+and not order_delivered_customer_date is null
+order by hours_approved desc
+-- 
