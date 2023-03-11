@@ -1,5 +1,5 @@
 -- order_payments_dataset
--- 1. Total payment in given city
+-- 1. Total value in given city
 with
 tmp2 as 
 (
@@ -47,13 +47,13 @@ select *
 from tmp2;
 
 -- payments_new_dataset
--- 3. Total payment in each city
+-- 3. Total value in each city
 select customer_city, count(customer_city), sum(payment_value)
 from payments_new_dataset
 group by customer_city
 order by sum desc;
 
--- 4. Total payment in each order_status
+-- 4. Total value in each order_status
 select distinct (order_status), sum(payment_value)
 from payments_new_dataset
 group by order_status
