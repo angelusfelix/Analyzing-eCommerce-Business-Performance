@@ -5,6 +5,7 @@ from product_dataset
 where false; --To show columns name
 
 --2. Drop null values
+create table product_dataset_dropnull
 with
 tmp2 as 
 (with 
@@ -23,7 +24,14 @@ select *
 from tmp2;
 
 -- product_dataset_dropnull
--- 3. Product category sold
+-- 3. Check duplicate data
+select distinct product_id, count(product_id) as total_product
+from product_dataset_dropnull
+group by 1
+order by total_product desc
+-- There is no duplicate data in product_id
+
+-- 4. Product category sold
 select distinct product_category_name, count(product_category_name) as total_product
 from product_dataset_dropnull
 group by 1
