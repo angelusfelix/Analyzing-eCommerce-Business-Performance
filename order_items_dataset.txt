@@ -1,0 +1,26 @@
+-- order_items_dataset
+-- 1. Join payment_new_dataset, order_items_dataset, product_dataset_dropnull
+create table order_items_new_dataset as 
+select 
+	   pnd.customer_id, 
+	   tmp.order_id,
+	   tmp.product_id,
+	   tmp.product_category_name,
+	   pnd.customer_city,
+	   pnd.order_status,
+	   pnd.payment_type,
+	   tmp.price	
+from 
+(
+select 
+	oid.product_id,
+	oid.order_id,
+	pdd.product_category_name,
+	oid.price
+from order_items_dataset oid
+left join product_dataset_dropnull pdd
+on oid.product_id = pdd.product_id)
+as tmp
+left join payments_new_dataset pnd
+on pnd.order_id = tmp.order_id;
+	   
