@@ -1,0 +1,19 @@
+-- 1. Join geolocation dataset, sellers_new_dataset
+create table geolocation_new_dataset as 
+select 
+	snd.customer_id,
+	snd.seller_id,
+	snd.order_id,
+	snd.product_id,
+	snd.product_category_name,
+	snd.order_status,
+	snd.payment_type,
+	snd.price,
+	snd.customer_city,
+	snd.customer_zip_code_prefix,
+	gd.geolocation_lat,
+	gd.geolocation_lng,
+	snd.seller_city
+from sellers_new_dataset snd
+join geolocation_dataset gd
+on gd.geolocation_zip_code_prefix = snd.customer_zip_code_prefix
