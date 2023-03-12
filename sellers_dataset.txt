@@ -6,35 +6,37 @@ group by seller_city
 order by count desc
 -- the most seller in seller_dataset is seller from sao paulo (694 seller)
 
--- 2. Join order_items_new_dataset, sellers_dataset
+-- 2. Join order_reviews_new_dataset, sellers_dataset
 select 
-	oind.customer_id,
-	oind.order_id,
-	oind.product_id,
-	oind.seller_id,
-	oind.product_category_name,
-	oind.customer_city,
-	oind.order_status,
-	oind.payment_type,
-	oind.price,
+	ornd.customer_id,
+	ornd.order_id,
+	ornd.product_id,
+	ornd.seller_id,
+	ornd.product_category_name,
+	ornd.customer_city,
+	ornd.customer_zip_code_prefix,
+	ornd.order_status,
+	ornd.payment_type,
+	ornd.price,
 	sd.seller_city
-from order_items_new_dataset oind
+from order_reviews_new_dataset ornd
 left join sellers_dataset as sd
-on sd.seller_id = oind.seller_id
+on sd.seller_id = ornd.seller_id;
 
 -- 3. Create new table
 create table sellers_new_dataset as
 select 
-	oind.customer_id,
-	oind.order_id,
-	oind.product_id,
-	oind.seller_id,
-	oind.product_category_name,
-	oind.customer_city,
-	oind.order_status,
-	oind.payment_type,
-	oind.price,
+	ornd.customer_id,
+	ornd.order_id,
+	ornd.product_id,
+	ornd.seller_id,
+	ornd.product_category_name,
+	ornd.customer_city,
+	ornd.customer_zip_code_prefix,
+	ornd.order_status,
+	ornd.payment_type,
+	ornd.price,
 	sd.seller_city
-from order_items_new_dataset as oind
+from order_reviews_new_dataset ornd
 left join sellers_dataset as sd
-on sd.seller_id = oind.seller_id
+on sd.seller_id = ornd.seller_id;
