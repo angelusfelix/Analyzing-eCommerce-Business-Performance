@@ -5,6 +5,7 @@ select
 	   pnd.customer_id, 
 	   tmp.order_id,
 	   tmp.product_id,
+	   tmp.seller_id,
 	   tmp.product_category_name,
 	   pnd.customer_city,
 	   pnd.order_status,
@@ -15,6 +16,7 @@ from
 select 
 	oid.product_id,
 	oid.order_id,
+	oid.seller_id,
 	pdd.product_category_name,
 	oid.price
 from order_items_dataset oid
