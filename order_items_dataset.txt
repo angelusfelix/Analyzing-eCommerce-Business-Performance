@@ -23,4 +23,12 @@ on oid.product_id = pdd.product_id)
 as tmp
 left join payments_new_dataset pnd
 on pnd.order_id = tmp.order_id;
+
+-- order_items_new_dataset
+-- 2. Total price in each product
+select distinct product_category_name, sum(price)
+from order_items_new_dataset
+group by product_category_name
+order by sum desc
+
 	   
