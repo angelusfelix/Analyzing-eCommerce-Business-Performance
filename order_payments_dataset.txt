@@ -30,7 +30,8 @@ tmp2 as
 (
 	select cd.customer_id, 
 	tmp.order_id,
-	cd.customer_city, 
+	cd.customer_city,
+	cd.customer_zip_code_prefix,
 	tmp.order_status,
 	tmp.payment_type,
 	tmp.payment_value
@@ -45,6 +46,7 @@ on tmp.customer_id=cd.customer_id
 )
 select *
 from tmp2;
+
 
 -- payments_new_dataset
 -- 3. Total value in each city
