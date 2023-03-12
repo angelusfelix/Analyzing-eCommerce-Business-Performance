@@ -1,0 +1,38 @@
+order_reviews_dataset
+-- 1. Join order_items_new_dataset and order_reviews_dataset
+select 
+	oind.customer_id,
+	oind.order_id,
+	oind.product_category_name,
+	oind.customer_city,
+	oind.order_status,
+	oind.payment_type,
+	oind.price,
+	ord.review_score
+from order_items_new_dataset as oind
+left join order_reviews_dataset as ord
+on oind.order_id = ord.order_id
+
+-- 2. Create new table 
+create table order_reviews_new_dataset as
+select 
+	oind.customer_id,
+	oind.order_id,
+	oind.product_category_name,
+	oind.customer_city,
+	oind.order_status,
+	oind.payment_type,
+	oind.price,
+	ord.review_score
+from order_items_new_dataset as oind
+left join order_reviews_dataset as ord
+on oind.order_id = ord.order_id
+
+order_reviews_new_dataset
+-- 3. Review score in each product
+select distinct product_category_name , avg(review_score) as mean_score
+from order_reviews_new_dataset
+group by product_category_name
+order by mean_score desc
+-- "security_and_services" is the lowest product's mean_score (2.50 out of 5)
+-- "cds_dvds_musicals" is the highest product's mean_score (4.64 out of 5)
