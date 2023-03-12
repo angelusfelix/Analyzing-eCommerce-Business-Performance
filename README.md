@@ -1,3 +1,8 @@
+Goal = Aggregated various business csv files and simplified to track, 
+monitor and assess the success or failure of various business processes
+
+notes = "##" = dataset
+
 ## Customer_dataset
 1. There is no duplicate data in customers_dataset.
 2. Most customer in customer_dataset is customer from sao paulo 15540 customers.
@@ -76,3 +81,30 @@
 	- ornd.price,
 	- sd.seller_city
 3. create table sellers_new_dataset
+
+## geolocation_dataset
+1. Join geolocation dataset, sellers_new_dataset
+	- snd.customer_id,
+	- snd.seller_id,
+	- snd.order_id,
+	- snd.product_id,
+	- snd.product_category_name,
+	- snd.order_status,
+	- snd.payment_type,
+	- snd.price,
+	- snd.customer_city,
+	- snd.customer_zip_code_prefix,
+	- gd.geolocation_lat,
+	- gd.geolocation_lng,
+	- snd.seller_city
+2. Create table geolocation_new_dataset. Geolocation_new_dataset is our fix_dataset
+
+## Result from fix_dataset
+1. The customer who spends the most is the customer with the id "351e40989da90e70487765f6ea15d54b" 
+with a total purchase of R$ 982607.7299999467.
+2. The most product sold is bed_bath_table (1893568 units sold).
+3. The most status order is "delivered", "shipped", and "cancelled".
+4. The most customer is customer from rio de janeiro, sao paulo, and belo horizonte.
+5. The most seller is seller from sao paulo, ibitinga, and curitiba
+6. Seller with id "1f50f920176fa81dab994f9023523100" is the most seller who sell his product. The products that he/she sell is garden_tools.
+
