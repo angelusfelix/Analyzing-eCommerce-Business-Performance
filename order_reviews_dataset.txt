@@ -18,6 +18,7 @@ create table order_reviews_new_dataset as
 select 
 	oind.customer_id,
 	oind.order_id,
+        oind.seller_id,
 	oind.product_category_name,
 	oind.customer_city,
 	oind.order_status,
