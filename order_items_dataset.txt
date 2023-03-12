@@ -8,6 +8,7 @@ select
 	   tmp.seller_id,
 	   tmp.product_category_name,
 	   pnd.customer_city,
+	   pnd.customer_zip_code_prefix,
 	   pnd.order_status,
 	   pnd.payment_type,
 	   tmp.price	
