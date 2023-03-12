@@ -1,0 +1,40 @@
+sellers_dataset
+-- 1. The most seller
+select distinct seller_city, count (seller_city)
+from sellers_dataset
+group by seller_city
+order by count desc
+-- the most seller in seller_dataset is seller from sao paulo (694 seller)
+
+-- 2. Join order_items_new_dataset, sellers_dataset
+select 
+	oind.customer_id,
+	oind.order_id,
+	oind.product_id,
+	oind.seller_id,
+	oind.product_category_name,
+	oind.customer_city,
+	oind.order_status,
+	oind.payment_type,
+	oind.price,
+	sd.seller_city
+from order_items_new_dataset oind
+left join sellers_dataset as sd
+on sd.seller_id = oind.seller_id
+
+-- 3. Create new table
+create table sellers_new_dataset as
+select 
+	oind.customer_id,
+	oind.order_id,
+	oind.product_id,
+	oind.seller_id,
+	oind.product_category_name,
+	oind.customer_city,
+	oind.order_status,
+	oind.payment_type,
+	oind.price,
+	sd.seller_city
+from order_items_new_dataset as oind
+left join sellers_dataset as sd
+on sd.seller_id = oind.seller_id
